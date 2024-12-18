@@ -1,7 +1,7 @@
 {
 	"name": "js-christmas",
 	"version": "1.0.0",
-	"description": "",
+	"description": "A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
@@ -9,8 +9,8 @@
 		"build": "babel src --out-dir dist && cp src/index.d.ts dist/index.d.ts",
     "prepare": "npm run build"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": ["christmas", "snow", "lights", "effects", "web", "application", "javascript", "package"],
+	"author": "Alexandre Grisey - https://gitquest.dev/player/Alex0x47",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.26.4",
