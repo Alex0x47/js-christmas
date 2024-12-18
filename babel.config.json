@@ -1,3 +1,10 @@
 {
-  "presets": ["@babel/preset-env"]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false  // This ensures Babel does not convert ES modules to CommonJS
+      }
+    ]
+  ]
 }
