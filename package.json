@@ -1,0 +1,19 @@
+{
+	"name": "js-christmas",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "babel src --out-dir dist",
+		"prepare": "npm run build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/cli": "^7.26.4",
+		"@babel/core": "^7.26.0",
+		"@babel/preset-env": "^7.26.0"
+	}
+}
