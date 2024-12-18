@@ -1,6 +1,6 @@
 class JSChristmas {
   constructor() {
-    console.log("JSChristmas initialized!");
+    console.log("js-christmas - developed by https://gitquest.dev/player/Alex0x47")
   }
 
   snowStorm(options = {}) {
@@ -9,7 +9,8 @@ class JSChristmas {
       maxSnowflakes = 200,
       particlesPerThousandPixels = 0.1,
       fallSpeed = 1.25,
-      pauseWhenNotActive = true
+      pauseWhenNotActive = false,
+      stopAfter = null
     } = options;
 
     const today = new Date();
@@ -25,6 +26,7 @@ class JSChristmas {
 
     let snowflakeInterval;
     let isTabActive = true;
+    let hasStopped = false;
 
     // Reset the snowflake position and animation
     function resetSnowflake(snowflake) {
@@ -44,7 +46,9 @@ class JSChristmas {
 
       setTimeout(() => {
         if (parseInt(snowflake.style.top, 10) < viewportHeight) {
-          resetSnowflake(snowflake);
+          if (!hasStopped) {
+            resetSnowflake(snowflake);
+          }
         } else {
           snowflake.remove(); // Remove when it goes off the bottom edge
         }
@@ -69,8 +73,13 @@ class JSChristmas {
 
       clearInterval(snowflakeInterval);
       snowflakeInterval = setInterval(() => {
-        if (isTabActive && snowflakes.length < maxSnowflakes) {
-          requestAnimationFrame(createSnowflake);
+        if (!stopAfter || (stopAfter && Date.now() < startTime + stopAfter)) {
+          if (isTabActive && snowflakes.length < maxSnowflakes) {
+            requestAnimationFrame(createSnowflake);
+          }
+        } else {
+          hasStopped = true;
+          clearInterval(snowflakeInterval);
         }
       }, interval);
     }
@@ -91,6 +100,7 @@ class JSChristmas {
     this._addStyles();
 
     // Start snow generation
+    const startTime = Date.now();
     generateSnowflakes();
 
     // Handle window resizing
@@ -121,7 +131,6 @@ class JSChristmas {
           body, html {
               margin: 0;
               padding: 0;
-              background-color: rgba(20, 20, 25, 1);
               overflow-x: hidden;
               width: 100vw;
               height: auto;
@@ -174,6 +183,175 @@ class JSChristmas {
               }
           }
       `;
+    document.head.appendChild(style);
+  }
+
+  christmasLights(options = {}) {
+    const {
+      pattern = 'classic',
+      colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff69b4'],
+      size = 'medium',
+      position = 'top',
+      blinkSpeed = 1,
+      spacing = 30
+    } = options;
+
+    // Create container for the string and lights
+    const lightsContainer = document.createElement('div');
+    lightsContainer.classList.add('christmas-lights-container');
+    lightsContainer.style.position = 'fixed';
+    lightsContainer.style.zIndex = '99998';
+
+    // Position the container
+    switch(position) {
+      case 'top':
+        lightsContainer.style.top = '-15px';
+        lightsContainer.style.left = '0';
+        lightsContainer.style.right = '0';
+        break;
+      case 'bottom':
+        lightsContainer.style.bottom = '-15px';
+        lightsContainer.style.left = '0';
+        lightsContainer.style.right = '0';
+        break;
+      case 'left':
+        lightsContainer.style.top = '0';
+        lightsContainer.style.bottom = '0';
+        lightsContainer.style.left = '0';
+        lightsContainer.style.flexDirection = 'column';
+        break;
+      case 'right':
+        lightsContainer.style.top = '0';
+        lightsContainer.style.bottom = '0';
+        lightsContainer.style.right = '0';
+        lightsContainer.style.flexDirection = 'column';
+        break;
+      case 'all':
+        return this._createFrameLights(options);
+    }
+
+    // Create the wire
+    const wire = document.createElement('div');
+    wire.classList.add('christmas-wire');
+    lightsContainer.appendChild(wire);
+
+    // Calculate number of lights
+    const screenWidth = window.innerWidth;
+    const numberOfLights = Math.floor(screenWidth / spacing);
+
+    // Create lights
+    for (let i = 0; i < numberOfLights; i++) {
+      const lightWrapper = document.createElement('div');
+      lightWrapper.classList.add('light-wrapper');
+      
+      const light = document.createElement('div');
+      light.classList.add('christmas-light');
+      light.style.backgroundColor = colors[i % colors.length];
+      
+      // Set size based on option
+      const lightSize = this._getLightSize(size);
+      light.style.width = lightSize;
+      light.style.height = lightSize;
+      
+      // Add animation delay
+      light.style.animationDelay = `${(i * 0.1) / blinkSpeed}s`;
+
+      lightWrapper.appendChild(light);
+      wire.appendChild(lightWrapper);
+    }
+
+    document.body.appendChild(lightsContainer);
+    this._addEnhancedLightStyles(pattern, blinkSpeed);
+  }
+
+  _getLightSize(size) {
+    switch(size) {
+      case 'small': return '12px';
+      case 'medium': return '15px';
+      case 'large': return '20px';
+      default: return '15px';
+    }
+  }
+
+  _createFrameLights(options) {
+    // Create lights for all sides
+    this.christmasLights({ ...options, position: 'top' });
+    this.christmasLights({ ...options, position: 'bottom' });
+    this.christmasLights({ ...options, position: 'left' });
+    this.christmasLights({ ...options, position: 'right' });
+  }
+
+  _addEnhancedLightStyles(pattern, blinkSpeed) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .christmas-lights-container {
+        pointer-events: none;
+      }
+
+      .christmas-wire {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        background-color: #222;
+        height: 2px;
+        margin: 15px;
+      }
+
+      .light-wrapper {
+        position: relative;
+        width: 2px;
+        height: 20px;
+        background-color: #222;
+      }
+
+      .christmas-light {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        animation: lightGlow ${1.5 / blinkSpeed}s ease-in-out infinite;
+      }
+
+      .christmas-light::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background-color: #444;
+        border-radius: 2px;
+      }
+
+      .christmas-light::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        box-shadow: 
+          0 0 5px currentColor,
+          0 0 10px currentColor,
+          0 0 15px currentColor,
+          0 0 20px currentColor;
+        animation: lightFlare ${2 / blinkSpeed}s ease-in-out infinite;
+        opacity: 0.8;
+      }
+
+      @keyframes lightGlow {
+        0%, 100% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(0.88); }
+      }
+
+      @keyframes lightFlare {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 0.3; }
+      }
+    `;
     document.head.appendChild(style);
   }
 }
