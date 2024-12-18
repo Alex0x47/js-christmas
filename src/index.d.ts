@@ -9,10 +9,10 @@ declare module "js-christmas" {
   }
 
   interface ChristmasLightsOptions {
+    onlyOnChristmasDay?: boolean;
     pattern?: string;
     colors?: string[];
     size?: string;
-    position?: string;
     blinkSpeed?: number;
     spacing?: number;
   }

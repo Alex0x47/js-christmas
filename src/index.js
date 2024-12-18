@@ -191,7 +191,7 @@ class JSChristmas {
       pattern = 'classic',
       colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff69b4'],
       size = 'medium',
-      position = 'top',
+      // position = 'top',
       blinkSpeed = 1,
       spacing = 30
     } = options;
@@ -203,69 +203,84 @@ class JSChristmas {
     lightsContainer.style.zIndex = '99998';
 
     // Position the container
-    switch(position) {
-      case 'top':
-        lightsContainer.style.top = '-15px';
-        lightsContainer.style.left = '0';
-        lightsContainer.style.right = '0';
-        break;
-      case 'bottom':
-        lightsContainer.style.bottom = '-15px';
-        lightsContainer.style.left = '0';
-        lightsContainer.style.right = '0';
-        break;
-      case 'left':
-        lightsContainer.style.top = '0';
-        lightsContainer.style.bottom = '0';
-        lightsContainer.style.left = '0';
-        lightsContainer.style.flexDirection = 'column';
-        break;
-      case 'right':
-        lightsContainer.style.top = '0';
-        lightsContainer.style.bottom = '0';
-        lightsContainer.style.right = '0';
-        lightsContainer.style.flexDirection = 'column';
-        break;
-      case 'all':
-        return this._createFrameLights(options);
-    }
+    // switch (position) {
+    //   case 'top':
+    //     lightsContainer.style.top = '-15px';
+    //     lightsContainer.style.left = '0';
+    //     lightsContainer.style.right = '0';
+    //     break;
+    //   case 'bottom':
+    //     lightsContainer.style.bottom = '-15px';
+    //     lightsContainer.style.left = '0';
+    //     lightsContainer.style.right = '0';
+    //     break;
+    //   case 'left':
+    //     lightsContainer.style.top = '0';
+    //     lightsContainer.style.bottom = '0';
+    //     lightsContainer.style.left = '-15px';
+    //     lightsContainer.style.flexDirection = 'column';
+    //     break;
+    //   case 'right':
+    //     lightsContainer.style.top = '0';
+    //     lightsContainer.style.bottom = '0';
+    //     lightsContainer.style.right = '-15px';
+    //     lightsContainer.style.flexDirection = 'column';
+    //     break;
+    //   case 'all':
+    //     return this._createFrameLights(options);
+    // }
 
     // Create the wire
     const wire = document.createElement('div');
     wire.classList.add('christmas-wire');
     lightsContainer.appendChild(wire);
 
-    // Calculate number of lights
-    const screenWidth = window.innerWidth;
-    const numberOfLights = Math.floor(screenWidth / spacing);
+    // Calculate number of lights based on container dimension
+    const isVertical = position === 'left' || position === 'right';
+    const screenMeasure = isVertical ? window.innerHeight : window.innerWidth;
+    const numberOfLights = Math.floor(screenMeasure / spacing);
 
     // Create lights
     for (let i = 0; i < numberOfLights; i++) {
       const lightWrapper = document.createElement('div');
       lightWrapper.classList.add('light-wrapper');
-      
+
       const light = document.createElement('div');
       light.classList.add('christmas-light');
       light.style.backgroundColor = colors[i % colors.length];
-      
+
       // Set size based on option
       const lightSize = this._getLightSize(size);
       light.style.width = lightSize;
       light.style.height = lightSize;
-      
-      // Add animation delay
-      light.style.animationDelay = `${(i * 0.1) / blinkSpeed}s`;
+
+      // Add animation delay based on pattern
+      switch (pattern) {
+        case 'wave':
+          light.style.animationDelay = `${(i * 0.1) / blinkSpeed}s`;
+          break;
+        case 'chase':
+          light.style.animationDelay = `${(i * 0.05) / blinkSpeed}s`;
+          break;
+        case 'twinkle':
+          light.style.animationDelay = `${Math.random() * 2 / blinkSpeed}s`;
+          break;
+        case 'alternate':
+          light.style.animationDelay = `${(i % 2) * 0.5 / blinkSpeed}s`;
+          break;
+        // classic pattern has no delay
+      }
 
       lightWrapper.appendChild(light);
       wire.appendChild(lightWrapper);
     }
 
     document.body.appendChild(lightsContainer);
-    this._addEnhancedLightStyles(pattern, blinkSpeed);
+    this._addEnhancedLightStyles(pattern, blinkSpeed, isVertical);
   }
 
   _getLightSize(size) {
-    switch(size) {
+    switch (size) {
       case 'small': return '12px';
       case 'medium': return '15px';
       case 'large': return '20px';
@@ -281,7 +296,7 @@ class JSChristmas {
     this.christmasLights({ ...options, position: 'right' });
   }
 
-  _addEnhancedLightStyles(pattern, blinkSpeed) {
+  _addEnhancedLightStyles(pattern, blinkSpeed, isVertical) {
     const style = document.createElement('style');
     style.textContent = `
       .christmas-lights-container {
@@ -293,32 +308,28 @@ class JSChristmas {
         display: flex;
         justify-content: space-between;
         background-color: #222;
-        height: 2px;
-        margin: 15px;
+        ${isVertical ? 'width: 2px; margin: 15px 0;' : 'height: 2px; margin: 15px;'}
       }
 
       .light-wrapper {
         position: relative;
-        width: 2px;
-        height: 20px;
+        ${isVertical ? 'height: 2px;' : 'width: 2px;'}
+        ${isVertical ? 'width: 20px;' : 'height: 20px;'}
         background-color: #222;
       }
 
       .christmas-light {
         position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        ${isVertical ? 'left: 0; top: 50%; transform: translateY(-50%);' : 'bottom: 0; left: 50%; transform: translateX(-50%);'}
         border-radius: 50%;
-        animation: lightGlow ${1.5 / blinkSpeed}s ease-in-out infinite;
+        animation: ${this._getAnimationName(pattern)} ${2 / blinkSpeed}s ease-in-out infinite;
       }
 
       .christmas-light::before {
         content: '';
         position: absolute;
-        top: -2px;
-        left: 50%;
-        transform: translateX(-50%);
+        ${isVertical ? 'right: -2px;' : 'top: -2px;'}
+        ${isVertical ? 'top: 50%; transform: translateY(-50%);' : 'left: 50%; transform: translateX(-50%);'}
         width: 4px;
         height: 4px;
         background-color: #444;
@@ -342,9 +353,29 @@ class JSChristmas {
         opacity: 0.8;
       }
 
-      @keyframes lightGlow {
-        0%, 100% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(0.88); }
+      @keyframes classic {
+        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); }
+        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.88); }
+      }
+
+      @keyframes wave {
+        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); }
+        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.3); }
+      }
+
+      @keyframes chase {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.15; }
+      }
+
+      @keyframes twinkle {
+        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); opacity: 1; }
+        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.4); opacity: 0.4; }
+      }
+
+      @keyframes alternate {
+        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); opacity: 1; }
+        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.5); opacity: 0.5; }
       }
 
       @keyframes lightFlare {
@@ -353,6 +384,18 @@ class JSChristmas {
       }
     `;
     document.head.appendChild(style);
+  }
+
+  _getAnimationName(pattern) {
+    switch (pattern) {
+      case 'wave':
+      case 'chase':
+      case 'twinkle':
+      case 'alternate':
+        return pattern;
+      default:
+        return 'classic';
+    }
   }
 }
 
