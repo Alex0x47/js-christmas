@@ -2,8 +2,11 @@
 
 A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!
 
+<img src="assets/demo.gif" width="600px" />
+
 ## Features
 - ❄️ Snowstorm effect with customizable settings
+- More to come (maybe) 🤓
 
 ## Installation
 
@@ -20,9 +23,6 @@ const christmas = new JSChristmas();
 
 // Add snow effect
 christmas.snowStorm();
-
-// Add Christmas lights
-christmas.christmasLights();
 ```
 
 ## Snow Effect ❄️
