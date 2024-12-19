@@ -1,4 +1,4 @@
-# js-christmas 🎄
+# jschristmas 🎄
 
 A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!
 
@@ -11,7 +11,7 @@ A lightweight JavaScript package to add Christmas effects to your website. Perfe
 ## Installation
 
 ```bash
-npm install js-christmas
+npm install jschristmas
 ```
 
 ## Quick Start
