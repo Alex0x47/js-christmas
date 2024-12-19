@@ -78,8 +78,7 @@ christmas.snowStorm({
 ISC
 
 ## Author
-[Alex0x47](https://gitquest.dev/player/Alex0x47)
-Creator of:
+[Alex0x47](https://gitquest.dev/player/Alex0x47), creator of:
 - [GitQuest: Commit & Conquer](https://gitquest.dev), the tournament for developers
 - [StablePush](https://stablepush.dev), a CI/CD tool that checks your SEO and accessibility at every commit
 - [Indie Dev Tools](https://indiedev.tools), a collection of tools for indie developers
