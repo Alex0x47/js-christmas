@@ -1,6 +1,6 @@
 class JSChristmas {
   constructor() {
-    console.log("js-christmas - developed by https://gitquest.dev/player/Alex0x47")
+    console.log("Christmas Effects by https://github.com/Alex0x47/js-christmas")
   }
 
   snowStorm(options = {}) {
@@ -9,15 +9,14 @@ class JSChristmas {
       maxSnowflakes = 200,
       particlesPerThousandPixels = 0.1,
       fallSpeed = 1.25,
-      pauseWhenNotActive = false,
       stopAfter = null
     } = options;
 
+    const pauseWhenNotActive = false;
     const today = new Date();
     const isChristmasDay = today.getMonth() === 11 && today.getDate() === 25;
 
     if (onlyOnChristmasDay && !isChristmasDay) {
-      console.log("It's not Christmas Day!");
       return;
     }
 
@@ -184,218 +183,6 @@ class JSChristmas {
           }
       `;
     document.head.appendChild(style);
-  }
-
-  christmasLights(options = {}) {
-    const {
-      pattern = 'classic',
-      colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff69b4'],
-      size = 'medium',
-      // position = 'top',
-      blinkSpeed = 1,
-      spacing = 30
-    } = options;
-
-    // Create container for the string and lights
-    const lightsContainer = document.createElement('div');
-    lightsContainer.classList.add('christmas-lights-container');
-    lightsContainer.style.position = 'fixed';
-    lightsContainer.style.zIndex = '99998';
-
-    // Position the container
-    // switch (position) {
-    //   case 'top':
-    //     lightsContainer.style.top = '-15px';
-    //     lightsContainer.style.left = '0';
-    //     lightsContainer.style.right = '0';
-    //     break;
-    //   case 'bottom':
-    //     lightsContainer.style.bottom = '-15px';
-    //     lightsContainer.style.left = '0';
-    //     lightsContainer.style.right = '0';
-    //     break;
-    //   case 'left':
-    //     lightsContainer.style.top = '0';
-    //     lightsContainer.style.bottom = '0';
-    //     lightsContainer.style.left = '-15px';
-    //     lightsContainer.style.flexDirection = 'column';
-    //     break;
-    //   case 'right':
-    //     lightsContainer.style.top = '0';
-    //     lightsContainer.style.bottom = '0';
-    //     lightsContainer.style.right = '-15px';
-    //     lightsContainer.style.flexDirection = 'column';
-    //     break;
-    //   case 'all':
-    //     return this._createFrameLights(options);
-    // }
-
-    // Create the wire
-    const wire = document.createElement('div');
-    wire.classList.add('christmas-wire');
-    lightsContainer.appendChild(wire);
-
-    // Calculate number of lights based on container dimension
-    const isVertical = position === 'left' || position === 'right';
-    const screenMeasure = isVertical ? window.innerHeight : window.innerWidth;
-    const numberOfLights = Math.floor(screenMeasure / spacing);
-
-    // Create lights
-    for (let i = 0; i < numberOfLights; i++) {
-      const lightWrapper = document.createElement('div');
-      lightWrapper.classList.add('light-wrapper');
-
-      const light = document.createElement('div');
-      light.classList.add('christmas-light');
-      light.style.backgroundColor = colors[i % colors.length];
-
-      // Set size based on option
-      const lightSize = this._getLightSize(size);
-      light.style.width = lightSize;
-      light.style.height = lightSize;
-
-      // Add animation delay based on pattern
-      switch (pattern) {
-        case 'wave':
-          light.style.animationDelay = `${(i * 0.1) / blinkSpeed}s`;
-          break;
-        case 'chase':
-          light.style.animationDelay = `${(i * 0.05) / blinkSpeed}s`;
-          break;
-        case 'twinkle':
-          light.style.animationDelay = `${Math.random() * 2 / blinkSpeed}s`;
-          break;
-        case 'alternate':
-          light.style.animationDelay = `${(i % 2) * 0.5 / blinkSpeed}s`;
-          break;
-        // classic pattern has no delay
-      }
-
-      lightWrapper.appendChild(light);
-      wire.appendChild(lightWrapper);
-    }
-
-    document.body.appendChild(lightsContainer);
-    this._addEnhancedLightStyles(pattern, blinkSpeed, isVertical);
-  }
-
-  _getLightSize(size) {
-    switch (size) {
-      case 'small': return '12px';
-      case 'medium': return '15px';
-      case 'large': return '20px';
-      default: return '15px';
-    }
-  }
-
-  _createFrameLights(options) {
-    // Create lights for all sides
-    this.christmasLights({ ...options, position: 'top' });
-    this.christmasLights({ ...options, position: 'bottom' });
-    this.christmasLights({ ...options, position: 'left' });
-    this.christmasLights({ ...options, position: 'right' });
-  }
-
-  _addEnhancedLightStyles(pattern, blinkSpeed, isVertical) {
-    const style = document.createElement('style');
-    style.textContent = `
-      .christmas-lights-container {
-        pointer-events: none;
-      }
-
-      .christmas-wire {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        background-color: #222;
-        ${isVertical ? 'width: 2px; margin: 15px 0;' : 'height: 2px; margin: 15px;'}
-      }
-
-      .light-wrapper {
-        position: relative;
-        ${isVertical ? 'height: 2px;' : 'width: 2px;'}
-        ${isVertical ? 'width: 20px;' : 'height: 20px;'}
-        background-color: #222;
-      }
-
-      .christmas-light {
-        position: absolute;
-        ${isVertical ? 'left: 0; top: 50%; transform: translateY(-50%);' : 'bottom: 0; left: 50%; transform: translateX(-50%);'}
-        border-radius: 50%;
-        animation: ${this._getAnimationName(pattern)} ${2 / blinkSpeed}s ease-in-out infinite;
-      }
-
-      .christmas-light::before {
-        content: '';
-        position: absolute;
-        ${isVertical ? 'right: -2px;' : 'top: -2px;'}
-        ${isVertical ? 'top: 50%; transform: translateY(-50%);' : 'left: 50%; transform: translateX(-50%);'}
-        width: 4px;
-        height: 4px;
-        background-color: #444;
-        border-radius: 2px;
-      }
-
-      .christmas-light::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 50%;
-        box-shadow: 
-          0 0 5px currentColor,
-          0 0 10px currentColor,
-          0 0 15px currentColor,
-          0 0 20px currentColor;
-        animation: lightFlare ${2 / blinkSpeed}s ease-in-out infinite;
-        opacity: 0.8;
-      }
-
-      @keyframes classic {
-        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); }
-        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.88); }
-      }
-
-      @keyframes wave {
-        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); }
-        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.3); }
-      }
-
-      @keyframes chase {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.15; }
-      }
-
-      @keyframes twinkle {
-        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); opacity: 1; }
-        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.4); opacity: 0.4; }
-      }
-
-      @keyframes alternate {
-        0%, 100% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(1); opacity: 1; }
-        50% { transform: ${isVertical ? 'translateY(-50%)' : 'translateX(-50%)'} scale(0.5); opacity: 0.5; }
-      }
-
-      @keyframes lightFlare {
-        0%, 100% { opacity: 0.8; }
-        50% { opacity: 0.3; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  _getAnimationName(pattern) {
-    switch (pattern) {
-      case 'wave':
-      case 'chase':
-      case 'twinkle':
-      case 'alternate':
-        return pattern;
-      default:
-        return 'classic';
-    }
   }
 }
 
