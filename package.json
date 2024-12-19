@@ -1,6 +1,6 @@
 {
 	"name": "jschristmas",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
