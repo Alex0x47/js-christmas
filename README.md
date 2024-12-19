@@ -82,3 +82,6 @@ ISC
 - [GitQuest: Commit & Conquer](https://gitquest.dev), the tournament for developers
 - [StablePush](https://stablepush.dev), a CI/CD tool that checks your SEO and accessibility at every commit
 - [Indie Dev Tools](https://indiedev.tools), a collection of tools for indie developers
+
+##
+<a href="https://indiedev.tools/tool/js-christmas-t_m4uyx6uyavap21ffpw" target="_blank"><img width="250" alt="Logo of the website Indie Dev Tools" src="https://indiedev.tools/featured_on_idt.png"/></a>
