@@ -17,7 +17,7 @@ npm install js-christmas
 ## Quick Start
 
 ```javascript
-import JSChristmas from 'js-christmas';
+import JSChristmas from 'jschristmas';
 
 const christmas = new JSChristmas();
 
