@@ -1,6 +1,6 @@
 {
 	"name": "jschristmas",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -14,6 +14,11 @@
 		"README.md",
 		"LICENSE"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Alex0x47/js-christmas.git"
+	},
+	"homepage": "https://github.com/Alex0x47/js-christmas",
 	"keywords": ["christmas", "snow", "lights", "effects", "web", "application", "javascript", "package"],
 	"author": "Alexandre Grisey - https://gitquest.dev/player/Alex0x47",
 	"license": "ISC",
