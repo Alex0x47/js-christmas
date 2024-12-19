@@ -1,13 +1,13 @@
 {
 	"name": "jschristmas",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "A lightweight JavaScript package to add Christmas effects to your website. Perfect for adding some holiday cheer to your web applications!",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "babel src --out-dir dist && cp src/index.d.ts dist/index.d.ts",
-    "prepare": "npm run build"
+		"build": "babel src --out-dir dist && cp src/index.d.ts dist/index.d.ts && webpack",
+		"prepare": "npm run build"
 	},
 	"files": [
 		"dist",
@@ -19,12 +19,25 @@
 		"url": "https://github.com/Alex0x47/js-christmas.git"
 	},
 	"homepage": "https://github.com/Alex0x47/js-christmas",
-	"keywords": ["christmas", "snow", "lights", "effects", "web", "application", "javascript", "package"],
+	"keywords": [
+		"christmas",
+		"snow",
+		"lights",
+		"effects",
+		"web",
+		"application",
+		"javascript",
+		"package"
+	],
 	"author": "Alexandre Grisey - https://gitquest.dev/player/Alex0x47",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.26.4",
 		"@babel/core": "^7.26.0",
-		"@babel/preset-env": "^7.26.0"
+		"@babel/preset-env": "^7.26.0",
+		"babel-loader": "^9.2.1",
+		"terser": "^5.37.0",
+		"webpack": "^5.97.1",
+		"webpack-cli": "^5.1.4"
 	}
 }
