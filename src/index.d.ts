@@ -1,4 +1,4 @@
-declare module "js-christmas" {
+declare module "jschristmas" {
   interface SnowStormOptions {
       onlyOnChristmasDay?: boolean;
       maxSnowflakes?: number;
