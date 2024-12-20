@@ -19,7 +19,7 @@ npm install jschristmas
 Or you can download the script from CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/jschristmas@0.0.8/dist/index.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jschristmas@0.0.10/dist/index.browser.min.js"></script>
 ```   
 
 ## Quick Start
