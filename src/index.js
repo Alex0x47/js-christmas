@@ -6,6 +6,7 @@ class JSChristmas {
   snowStorm(options = {}) {
     const {
       onlyOnChristmasDay = false,
+      color = "white",
       maxSnowflakes = 200,
       particlesPerThousandPixels = 0.1,
       fallSpeed = 1.25,
@@ -96,7 +97,7 @@ class JSChristmas {
     }
 
     // Dynamically add required styles
-    this._addStyles();
+    this._addStyles(color);
 
     // Start snow generation
     const startTime = Date.now();
@@ -124,7 +125,7 @@ class JSChristmas {
   }
 
   // Private method to add necessary styles
-  _addStyles() {
+  _addStyles(color) {
     const style = document.createElement("style");
     style.textContent = `
           body, html {
@@ -148,7 +149,7 @@ class JSChristmas {
 
           .snowflake {
               position: absolute;
-              background-color: white;
+              background-color: ${color};
               border-radius: 50%;
               opacity: 0.8;
               pointer-events: none;

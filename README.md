@@ -50,6 +50,7 @@ christmas.snowStorm({
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `onlyOnChristmasDay` | boolean | false | Only show snow on December 25th |
+| `color` | string | "white" | Color of the snowflakes, can be a hex code or a CSS color name |
 | `maxSnowflakes` | number | 200 | Maximum number of snowflakes |
 | `particlesPerThousandPixels` | number | 0.1 | Density of snowflakes |
 | `fallSpeed` | number | 1.25 | Speed multiplier for falling snow |
@@ -66,11 +67,12 @@ christmas.snowStorm({
 });
 ```
 
-### Christmas Day Only
+### Christmas Day Only With Red Snowflakes
 ```javascript
 christmas.snowStorm({
     onlyOnChristmasDay: true,
-    maxSnowflakes: 250
+    maxSnowflakes: 250,
+    color: "#fe4242"
 });
 ```
 

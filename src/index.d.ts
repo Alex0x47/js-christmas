@@ -1,6 +1,7 @@
 declare module "jschristmas" {
   interface SnowStormOptions {
       onlyOnChristmasDay?: boolean;
+      color?: string;
       maxSnowflakes?: number;
       particlesPerThousandPixels?: number;
       fallSpeed?: number;
